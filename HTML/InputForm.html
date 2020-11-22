@@ -1,0 +1,139 @@
+<html data-lt-installed="true">
+    <head>
+        <!--providing character encoding and giving name to meta data-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Basic input form</title>
+    </head>
+    <link rel="stylesheet" href="..\css\InputForm.css">
+    <body>
+        <form>
+            <header class="headerContainer">Header-Sample FlexBox</header>
+            <div>
+                
+                <label for="text">text input type for Name:</label>
+                <!--input for what type of input we want text checkboxes etc -->
+                <input type="text" id="text" name="text" required>
+                <!--will be used in js for checking for error-->
+                <error-output class="text-error" for="text"></error-output>
+            </div>
+            <div>
+                <label for="pwd">password input type: </label>
+                <input type="password" id="pwd" name="pwd">
+                <error-output class="pwd-error" for="pwd"></error-output>
+            </div>
+            <div>
+                <label for="email">email input type: </label>
+                <input type="email" id="email" name="email">
+                <error-output class="email-error" for="email"></error-output>
+              </div>
+              <div>
+                <label for="url">url input type: </label>
+                <input type="url" id="url" name="url">
+              </div>
+              <div>
+                <label for="number">number input type: </label>
+                <input type="number" id="number" name="number">
+              </div>
+              <div>
+                <label for="tel">tel input type: </label>
+                <input type="tel" id="tel" name="tel">
+                <error-output class="tel-error" for="tel"></error-output>
+              </div>
+              <div>
+                <label for="search">search input type: </label>
+                <input type="search" id="search" name="search">
+              </div>
+              <div class="nativeDateTimePicker">
+                  <label for="party">Choose Date and Time</label>
+                  <input type="datetime-local" id="party" name="bday">    
+                  <span class= "validity"></span>                           
+              </div>
+              <div>
+                <label for="salary">Choose your salary </label>
+                <input type="range"  id="salary" name="salary" min=25000 max=50000 step="100" value="40000">
+                <!--this output value should always be same as input val will be used in js-->
+                <output class="salary-output" for="salary">40000</output>
+              </div>
+              <div>
+                  <button>Submit</button>
+              </div>
+        </form>
+        <script>
+            const text=document.querySelector('#text');
+            //similarly getting output for texterror 
+            //.specifies class
+            const textError=document.querySelector('.text-error');
+            //this will throw an event showing that name is incorrect or nothing
+        
+            text.addEventListener('input',function()
+            {
+              let nameRegex= RegExp('^[A-Z]{1}[A-Za-z]{2,}$');
+              if(nameRegex.test(text.value))
+              {
+                  textError.textContent="";
+              }
+              else
+              {
+                  textError.textContent="Name is incorrect";
+              }
+            });
+
+            //making range button synchronised with values of user
+            const salary=document.querySelector('#salary');
+            const output =document.querySelector('.salary-output');
+            //in range button the output shown should always be equal to value the user is updating
+            output.textContent=salary.value;
+            salary.addEventListener('input',function(){
+                output.textContent=salary.value;
+            });
+
+            //uc2 -Validating Email
+            const email= document.querySelector('#email');
+            const emailError =document.querySelector('.email-error');
+            email.addEventListener('input',function(){
+                let emailRegex= RegExp("^[A-Za-z]{3,}([.+_-][A-Za-z0-9]+)*[@][A-Za-z0-9]{1,}[.][a-zA-Z0-9]{2,3}([.][0-9a-zA-Z]{2})?$");
+                if(emailRegex.test(email.value))
+                {
+                  emailError.textContent="";
+                }
+                else
+                {
+                  emailError.textContent="Email is not Valid";
+                }
+            });
+
+            //uc3-validating mobile number
+            const tel= document.querySelector('#tel');
+            const telError =document.querySelector('.tel-error');
+            tel.addEventListener('input',function(){
+                let telRegex= RegExp('^[0-9]{2}[ ][0-9]{10}$');
+                if(telRegex.test(tel.value))
+                {
+                  telError.textContent="";
+                }
+                else
+                {
+                  telError.textContent="telephone number is not Valid";
+                }
+            });
+
+            //uc4-Validating password min 8 characters
+            //
+            //uc5-1 spl char , atleast one digit cap letter and small letter
+            const pwd= document.querySelector('#pwd');
+            const pwdError =document.querySelector('.pwd-error');
+            pwd.addEventListener('input',function(){
+                let pwdRegex= RegExp('^(?=.*[0-9])(?=.*[A-Z])(?=.*[^0-9a-zA-Z])(?!.*[^0-9a-zA-Z].*[^0-9a-zA-Z]).{8,}$');
+                if(pwdRegex.test(pwd.value))
+                {
+                  pwdError.textContent="";
+                }
+                else
+                {
+                  pwdError.textContent="password is not Valid";
+                }
+            });        
+        </script>
+    </body>
+</html>
